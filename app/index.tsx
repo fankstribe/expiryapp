@@ -1,19 +1,28 @@
-import { Text, View } from "react-native";
+import {Animated, View} from "react-native";
 import "./global.css"
 import {SafeAreaView} from "react-native-safe-area-context";
 import Header from "@/app/components/Header";
 import ExpiryForm from "@/app/components/ExpiryForm";
+import ExpiryList from "@/app/components/ExpiryList";
+import { useExpiries } from "@/src/hooks/useExpiries";
+import ScrollView = Animated.ScrollView;
 
 export default function MainScreen() {
+    const { expiries, addExpiry, deleteExpiry, togglePaidStatus } = useExpiries()
 
-  return (
-    <SafeAreaView edges={["top"]} className="flex-1 bg-slate-100 text-slate-800">
-        <Header />
-        <View className="flex-1 p-4">
-            <View className="flex flex-col gap-8">
-                <ExpiryForm />
-            </View>
-        </View>
-    </SafeAreaView>
+    return (
+        <SafeAreaView className="flex-1 bg-slate-100 text-slate-800">
+            <Header />
+            <ScrollView contentContainerStyle={{ paddingTop: 16 }} showsVerticalScrollIndicator={false}>
+                <View className="flex flex-col gap-6">
+                    <ExpiryForm onAdd={addExpiry} />
+                    <ExpiryList
+                        expiries={expiries}
+                        onDelete={deleteExpiry}
+                        onTogglePaid={togglePaidStatus}
+                    />
+                </View>
+            </ScrollView>
+        </SafeAreaView>
   );
 }

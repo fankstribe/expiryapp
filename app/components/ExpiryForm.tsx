@@ -3,8 +3,12 @@ import {useState} from "react";
 import {Ionicons} from "@expo/vector-icons";
 import {_formatDate} from "@/src/utils/_format-date";
 
+interface ExpiryFormProps {
+    onAdd: (data: { name: string; amount: string, dueDate: string }) => void;
+}
+
 // @ts-ignore
-const InputField = ({ label, value, onChangeText, placeholder, keyboardType, maxLength } : InputFieldProps) => {
+const InputField = ({ label, value, onChangeText, placeholder, keyboardType, maxLength } : any) => {
     const [focused, setFocused] = useState(false)
     return(
         <View>
@@ -27,7 +31,8 @@ const InputField = ({ label, value, onChangeText, placeholder, keyboardType, max
 }
 
 
-const ExpiryForm = () => {
+// @ts-ignore
+const ExpiryForm = ({ onAdd }) => {
     const [name, setName] = useState("");
     const [amount, setAmount] = useState("");
     const [dueDate, setDueDate] = useState("");
@@ -39,6 +44,20 @@ const ExpiryForm = () => {
             setErrors("Tutti i campi sono obbligatori.");
             return;
         }
+
+        const [day, month, year] = dueDate.split("/");
+        const isoDate = `${year}-${month}-${day}`;
+
+        if (isNaN(new Date(isoDate).getTime())) {
+            setErrors("Data non valida. Usa il formato GG/MM/AAAA");
+            return;
+        }
+
+        onAdd({ name, amount, dueDate: isoDate });
+
+        setName("");
+        setAmount("");
+        setDueDate("");
         setErrors("");
     }
 
