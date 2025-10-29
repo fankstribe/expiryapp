@@ -6,6 +6,7 @@ import ExpiryForm from "@/app/components/ExpiryForm";
 import ExpiryList from "@/app/components/ExpiryList";
 import { useExpiries } from "@/src/hooks/useExpiries";
 import ScrollView = Animated.ScrollView;
+import ExpiryChart from "@/app/components/ExpiryChart";
 
 export default function MainScreen() {
     const { expiries, addExpiry, deleteExpiry, togglePaidStatus } = useExpiries()
@@ -13,9 +14,10 @@ export default function MainScreen() {
     return (
         <SafeAreaView className="flex-1 bg-slate-100 text-slate-800">
             <Header />
-            <ScrollView contentContainerStyle={{ paddingTop: 16 }} showsVerticalScrollIndicator={false}>
+            <ScrollView contentContainerStyle={{ padding: 16 }} showsVerticalScrollIndicator={false}>
                 <View className="flex flex-col gap-6">
                     <ExpiryForm onAdd={addExpiry} />
+                    <ExpiryChart expiries={expiries} />
                     <ExpiryList
                         expiries={expiries}
                         onDelete={deleteExpiry}

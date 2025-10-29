@@ -30,11 +30,12 @@ const ExpiryList: React.FC<ExpiryListProps> = ({
                     )}
                     ItemSeparatorComponent={() => <View className="h-2" />}
                     showsVerticalScrollIndicator={false}
+                    scrollEnabled={false}
                 />
             ) : (
                 <View className="py-8 items-center">
-                    <Text className="text-slate-500">Nessuna scadenza ancora aggiunta.</Text>
-                    <Text className="text-sm text-slate-400">
+                    <Text className="sans text-slate-500">Nessuna scadenza ancora aggiunta.</Text>
+                    <Text className="sans text-sm text-slate-400">
                         Usa il modulo per iniziare.
                     </Text>
                 </View>

@@ -57,7 +57,7 @@ const ExpiryItem: React.FC<ExpiryItemProps> = ({ expiry, onDelete, onTogglePaid 
                 <Text className={`font-poppins-semibold text-base ${isPaid ? "line-through text-slate-400" : "text-slate-800"}`}>
                     {expiry.name}
                 </Text>
-                <Text className="text-xs text-slate-600">{formattedDate}</Text>
+                <Text className="sans text-xs text-slate-600">{formattedDate}</Text>
                 <View className="mt-2">
                     <StatusBadge status={expiry.status} />
                 </View>
