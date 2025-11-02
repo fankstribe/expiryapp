@@ -103,6 +103,9 @@ const ExpiryForm = ({ onAdd }) => {
             ) : null}
 
             <TouchableOpacity
+                // test
+                testID="submit-button"
+
                 onPress={handleSubmit}
                 className="flex flex-row items-center justify-center bg-sky-500 py-3 px-4 mt-6 mb-4 rounded-md shadow-md"
             >

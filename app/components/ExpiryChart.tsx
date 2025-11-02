@@ -1,4 +1,4 @@
-import {Dimensions, Text, View} from 'react-native'
+import {ScrollView, Dimensions, Text, View} from 'react-native'
 import React, {useMemo} from 'react'
 import {Expiry, ExpiryStatus} from "@/src/types";
 import {BarChart} from "react-native-chart-kit";
@@ -43,33 +43,47 @@ const ExpiryChart: React.FC<ExpiryChartProps> = ({ expiries = [] }) => {
         };
     }, [expiries]);
 
-    const screenWidth = Dimensions.get('window').width -32;
+    const screenWidth = Dimensions.get('window').width - 40;
 
     // @ts-ignore
     return (
-        <View className="bg-white p-6 rounded-lg border border-slate-200 mb-4">
+        <View className="bg-white p-5 rounded-lg border border-slate-200 mb-4 overflow-hidden">
             <Text className="text-xl font-poppins-semibold mb-4 text-sky-600">
                 Scadenze Mensili in Arrivo
             </Text>
             {chartData.labels.length > 0 ? (
-                <BarChart
-                    data={chartData}
-                    width={screenWidth}
-                    height={220}
-                    yAxisLabel="€"
-                    yAxisSuffix=""
-                    fromZero
-                    chartConfig={{
-                        backgroundGradientFrom:'#ffffff',
-                        backgroundGradientTo:'#ffffff',
-                        decimalPlaces: 0,
-                        color: (opacity = 1) => `rgba(14, 165, 233, ${opacity})`,
-                        labelColor: (opacity = 1) => `rgba(100, 116, 139, ${opacity})`,
-                        style: { borderRadius: 8 },
-                        propsForDots: { r: '6', strokeWidth: '2', stroke: '#0ea5e9' },
-                    }}
-                    style={{ borderRadius: 8 }}
-                />
+                <ScrollView
+                    horizontal
+                    showsHorizontalScrollIndicator={false}
+                    contentContainerStyle={{ paddingRight: 20 }}
+                >
+                    <BarChart
+                        data={chartData}
+                        width={screenWidth}
+                        height={220}
+                        yAxisLabel="€"
+                        yAxisSuffix=""
+                        showValuesOnTopOfBars
+                        withInnerLines={false}
+                        yAxisInterval={1}
+                        fromZero
+                        chartConfig={{
+                            backgroundGradientFrom:'#ffffff',
+                            backgroundGradientTo:'#ffffff',
+                            decimalPlaces: 0,
+                            color: (opacity = 1) => `rgba(14, 165, 233, ${opacity})`,
+                            labelColor: (opacity = 1) => `rgba(100, 116, 139, ${opacity})`,
+                            style: { borderRadius: 8 },
+                            propsForDots: { r: '6', strokeWidth: '2', stroke: '#0ea5e9' },
+                        }}
+                        style={{
+                            borderRadius: 8,
+                            marginLeft: -8,
+                            marginRight: -8,
+                        }}
+
+                    />
+                </ScrollView>
             ) : (
                 <View className="h-[220px] justify-center items-center">
                     <Text className="sans text-slate-500">Nessuna scadenza in arrivo da visualizzre.</Text>

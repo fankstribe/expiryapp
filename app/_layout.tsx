@@ -30,7 +30,7 @@ export default function RootLayout() {
 
   return(
       <View className="flex-1" onLayout={onLayoutRootView}>
-          <Stack screenOptions={{ headerShown: false }} />;
+          <Stack screenOptions={{ headerShown: false }} />
       </View>
     )
 }
