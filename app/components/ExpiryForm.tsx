@@ -1,7 +1,7 @@
 import {View, Text, TextInput, TouchableOpacity} from 'react-native'
 import {useState} from "react";
 import {Ionicons} from "@expo/vector-icons";
-import {_formatDate} from "@/src/utils/_format-date";
+import {_formatDate} from "@/utils/_format-date";
 
 interface ExpiryFormProps {
     onAdd: (data: { name: string; amount: string, dueDate: string }) => void;

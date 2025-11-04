@@ -1,7 +1,7 @@
 import {View, Text, FlatList} from 'react-native'
 import React from 'react'
-import {Expiry} from "@/src/types";
-import ExpiryItem from "@/app/components/ExpiryItem";
+import {Expiry} from "@/types";
+import ExpiryItem from "./ExpiryItem";
 
 interface ExpiryListProps {
     expiries: Expiry[];

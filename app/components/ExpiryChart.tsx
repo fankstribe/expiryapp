@@ -1,6 +1,6 @@
 import {ScrollView, Dimensions, Text, View} from 'react-native'
 import React, {useMemo} from 'react'
-import {Expiry, ExpiryStatus} from "@/src/types";
+import {Expiry, ExpiryStatus} from "@/types";
 import {BarChart} from "react-native-chart-kit";
 
 interface ExpiryChartProps {

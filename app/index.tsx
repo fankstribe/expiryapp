@@ -1,12 +1,12 @@
 import {Animated, View} from "react-native";
 import "./global.css"
 import {SafeAreaView} from "react-native-safe-area-context";
-import Header from "@/app/components/Header";
-import ExpiryForm from "@/app/components/ExpiryForm";
-import ExpiryList from "@/app/components/ExpiryList";
-import { useExpiries } from "@/src/hooks/useExpiries";
+import Header from "./components/Header";
+import ExpiryForm from "./components/ExpiryForm";
+import ExpiryList from "./components/ExpiryList";
+import { useExpiries } from "@/hooks/useExpiries";
 import ScrollView = Animated.ScrollView;
-import ExpiryChart from "@/app/components/ExpiryChart";
+import ExpiryChart from "./components/ExpiryChart";
 
 export default function MainScreen() {
     const { expiries, addExpiry, deleteExpiry, togglePaidStatus } = useExpiries()

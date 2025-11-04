@@ -1,4 +1,4 @@
-import {Expiry, ExpiryStatus} from "@/src/types";
+import {Expiry, ExpiryStatus} from "@/types";
 import {useCallback, useEffect, useState} from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 

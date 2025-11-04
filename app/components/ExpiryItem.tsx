@@ -1,6 +1,6 @@
 import {Text, TouchableOpacity, View} from 'react-native'
 import React from 'react'
-import {Expiry, ExpiryStatus} from "@/src/types";
+import {Expiry, ExpiryStatus} from "@/types";
 import {Ionicons} from "@expo/vector-icons";
 
 interface ExpiryItemProps {
