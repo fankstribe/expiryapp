@@ -5,13 +5,28 @@ import Header from "./components/Header";
 import ExpiryForm from "./components/ExpiryForm";
 import ExpiryList from "./components/ExpiryList";
 import { useExpiries } from "@/hooks/useExpiries";
-import ScrollView = Animated.ScrollView;
 import ExpiryChart from "./components/ExpiryChart";
+import {useEffect} from "react";
+import * as Notifications from 'expo-notifications';
+
+const ScrollView = Animated.ScrollView;
 
 export default function MainScreen() {
     const { expiries, addExpiry, deleteExpiry, togglePaidStatus } = useExpiries()
 
-    return (
+    useEffect(() => {
+       Notifications.setNotificationHandler({
+           handleNotification: async () => ({
+               shouldShowAlert: true,
+               shouldPlaySound: true,
+               shouldSetBadge: false,
+               shouldShowBanner: true,
+               shouldShowList: true
+           })
+       })
+    }, []);
+
+     return (
         <SafeAreaView className="flex-1 bg-slate-100 text-slate-800">
             <Header />
             <ScrollView contentContainerStyle={{ padding: 16 }} showsVerticalScrollIndicator={false}>

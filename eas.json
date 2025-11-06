@@ -1,23 +1,27 @@
 {
   "cli": {
-    "version": ">= 3.13.0"
+    "version": ">= 11.0.0"
   },
   "build": {
-    "preview": {
-      "distribution": "internal",
-      "android": {
-        "buildType": "apk"
-      }
-    },
-    "release": {
+    "development": {
+      "developmentClient": true,
       "distribution": "internal",
       "android": {
         "buildType": "apk"
       },
-      "env": {
-        "NODE_ENV": "production"
+      "ios": {
+        "simulator": true
       }
+    },
+    "preview": {
+      "distribution": "internal"
+    },
+    "production": {
+      "autoIncrement": true
     }
+  },
+  "submit": {
+    "production": {}
   }
 }
 
