@@ -1,6 +1,6 @@
 import {Image, Text, View} from 'react-native'
 import React from 'react'
-import {NotificationManager} from "./NotificationManager";
+import NotificationManager from "./NotificationManager";
 import * as Notifications from "expo-notifications"
 
 const Header = () => {
