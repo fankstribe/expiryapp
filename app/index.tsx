@@ -1,4 +1,4 @@
-import { Animated, Button, View, Platform } from "react-native";
+import { Animated, View } from "react-native";
 import "./global.css";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Header from "./components/Header";
@@ -16,32 +16,20 @@ export default function MainScreen() {
 
     useEffect(() => {
         const setupNotifications = async () => {
-            // ✅ Richiedi i permessi
-            const { status } = await Notifications.requestPermissionsAsync();
-            if (status !== "granted") {
-                console.warn("Permessi per le notifiche non concessi");
-                return;
-            }
+            await Notifications.setNotificationChannelAsync("default", {
+                name: "default",
+                importance: Notifications.AndroidImportance.HIGH,
+                sound: "default",
+                vibrationPattern: [0, 250, 250, 250],
+                lightColor: "#0ea5e9",
+            });
 
-            // ✅ Imposta il canale su Android
-            if (Platform.OS === "android") {
-                await Notifications.setNotificationChannelAsync("default", {
-                    name: "Default Channel",
-                    importance: Notifications.AndroidImportance.HIGH,
-                    sound: "default",
-                    vibrationPattern: [0, 250, 250, 250],
-                    lightColor: "#0ea5e9",
-                });
-            }
-
-            // ✅ Gestione del comportamento delle notifiche
             Notifications.setNotificationHandler({
                 handleNotification: async () => ({
                     shouldPlaySound: true,
                     shouldSetBadge: false,
-                    shouldShowAlert: true,
-                    shouldShowBanner: true, // richiesto da Expo 51+
-                    shouldShowList: true,   // richiesto da Expo 51+
+                    shouldShowBanner: true,
+                    shouldShowList: true,
                 }),
             });
         };
@@ -49,37 +37,29 @@ export default function MainScreen() {
         setupNotifications();
     }, []);
 
-    // 🔔 TEST 1 — Notifica dopo 5 secondi
-    const scheduleTestNotificationInterval = async () => {
-        console.log("✅ Programmo notifica fra 5 secondi...");
-        await Notifications.scheduleNotificationAsync({
-            content: {
-                title: "⏰ Test Notifica (5s)",
-                body: "Questa è una notifica di test dopo 5 secondi.",
-                sound: "default",
-            },
-            trigger: {
-                seconds: 5,
-                channelId: "default",
-            },
-        });
-    };
+    const scheduleExpiryNotification = async (expiry: { title: string; date: string }) => {
+        const dueDate = new Date(expiry.date);
+        dueDate.setHours(9, 0, 0, 0);
 
-    // 📅 TEST 2 — Notifica dopo 30 secondi
-    const scheduleTestNotificationDate = async () => {
-        console.log("✅ Programmo notifica fra 30 secondi...");
+        if (dueDate.getTime() <= Date.now()) return;
+
         await Notifications.scheduleNotificationAsync({
             content: {
-                title: "📅 Test Notifica Programmata",
-                body: "Questa è una notifica programmata per tra 30 secondi!",
-                sound: "default",
+                title: "📅 Scadenza oggi!",
+                body: `Il pagamento "${expiry.title}" scade oggi (${dueDate.toLocaleDateString()})`,
+                sound: true,
             },
             trigger: {
-                seconds: 30,
-                channelId: "default",
-            },
+                type: Notifications.SchedulableTriggerInputTypes.DATE,
+                date: dueDate
+            }
         });
-    };
+    }
+
+    const handleAddExpiry = (expiry: any) => {
+        addExpiry(expiry);
+        scheduleExpiryNotification(expiry);
+    }
 
     return (
         <SafeAreaView className="flex-1 bg-slate-100 text-slate-800">
@@ -89,27 +69,16 @@ export default function MainScreen() {
                 showsVerticalScrollIndicator={false}
             >
                 <View className="flex flex-col gap-6">
-                    <ExpiryForm onAdd={addExpiry} />
+                    <ExpiryForm onAdd={handleAddExpiry} />
                     <ExpiryChart expiries={expiries} />
                     <ExpiryList
                         expiries={expiries}
                         onDelete={deleteExpiry}
                         onTogglePaid={togglePaidStatus}
                     />
-
-                    {/* 🔔 Sezione test notifiche */}
-                    <View className="mt-8 gap-4">
-                        <Button
-                            title="🔔 Test Notifica (5s)"
-                            onPress={scheduleTestNotificationInterval}
-                        />
-                        <Button
-                            title="📅 Test Notifica (fra 30s)"
-                            onPress={scheduleTestNotificationDate}
-                        />
-                    </View>
                 </View>
             </ScrollView>
         </SafeAreaView>
     );
 }
+
