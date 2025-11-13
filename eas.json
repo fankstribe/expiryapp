@@ -22,7 +22,14 @@
   },
   "submit": {
     "production": {}
+  },
+  "production-apk": {
+    "autoIncrement": true,
+    "android": {
+      "buildType": "apk"
+    }
   }
+
 }
 
 

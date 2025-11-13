@@ -28,7 +28,6 @@ const NotificationManager = () => {
     const closeHelpModal = () => setIsHelpModalOpen(false);
 
     let iconName: keyof typeof Ionicons.glyphMap;
-    let text: string;
     let action: (() => void) | undefined;
     let disabled = false;
     let iconColor: string;
@@ -36,19 +35,16 @@ const NotificationManager = () => {
     switch (permissionStatus) {
         case 'granted':
             iconName = "notifications-outline";
-            text = 'Notifiche abilitate';
             iconColor = "#22c55e";
             disabled = true;
             break;
         case 'denied':
             iconName = "notifications-off-outline";
-            text = 'Notifiche bloccate';
             iconColor = "#ef4444";
             action = openHelpModal;
             break;
         default:
             iconName = "notifications-outline";
-            text = 'Abilita notifiche';
             iconColor = "#0ea5e9";
             action = requestPermissions;
             break;
@@ -59,10 +55,9 @@ const NotificationManager = () => {
             <TouchableOpacity
                 onPress={action}
                 disabled={disabled}
-                className="flex-row items-center bg-white/80 border border-slate-200 px-4 py-2 rounded-xl active:opacity-70"
+                className="bg-white/80 border border-slate-200 p-3 rounded-full active:opacity-70"
             >
                 <Ionicons name={iconName} size={28} color={iconColor} />
-                <Text className="ml-2 text-slate-700 font-poppins-medium">{text}</Text>
             </TouchableOpacity>
             <Modal visible={isHelpModalOpen} transparent animationType="slide">
                 <View className="flex-1 bg-black/50 justify-center items-center">
